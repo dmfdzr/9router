@@ -20,11 +20,11 @@ services:
       - key: ENABLE_REQUEST_LOGS
         value: "false"
       - key: JWT_SECRET
-        generateValue: true
+        sync: false
       - key: API_KEY_SECRET
-        generateValue: true
+        sync: false
       - key: MACHINE_ID_SALT
-        generateValue: true
+        sync: false
       - key: INITIAL_PASSWORD
         sync: false
       - key: BASE_URL
