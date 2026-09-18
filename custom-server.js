@@ -133,7 +133,16 @@ if (require.main === module) {
     // Repo checkout has no standalone build next to us. `next start` builds its HTTP
     // server in-process, so the wrapper above still sanitizes every request.
     const nextBin = require.resolve("next/dist/bin/next");
-    process.argv = [process.argv[0], nextBin, "start", ...process.argv.slice(2)];
+    const args = process.argv.slice(2);
+    const hasPort = args.some((arg) => arg === "-p" || arg === "--port" || arg.startsWith("--port="));
+    const hasHost = args.some((arg) => arg === "-H" || arg === "--hostname" || arg.startsWith("--hostname="));
+
+    // Platforms such as Render assign PORT dynamically. Keep the local default while
+    // allowing a platform-provided port without shell-specific package scripts.
+    if (!hasPort) args.push("--port", process.env.PORT || "20127");
+    if (!hasHost) args.push("--hostname", process.env.HOSTNAME || "0.0.0.0");
+
+    process.argv = [process.argv[0], nextBin, "start", ...args];
     require(nextBin);
   }
 }

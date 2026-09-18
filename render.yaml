@@ -1,0 +1,33 @@
+services:
+  - type: web
+    name: 9router
+    runtime: docker
+    plan: starter
+    region: singapore
+    healthCheckPath: /
+    maxShutdownDelaySeconds: 300
+    disk:
+      name: 9router-data
+      mountPath: /app/data
+      sizeGB: 1
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATA_DIR
+        value: /app/data
+      - key: AUTH_COOKIE_SECURE
+        value: "true"
+      - key: ENABLE_REQUEST_LOGS
+        value: "false"
+      - key: JWT_SECRET
+        generateValue: true
+      - key: API_KEY_SECRET
+        generateValue: true
+      - key: MACHINE_ID_SALT
+        generateValue: true
+      - key: INITIAL_PASSWORD
+        sync: false
+      - key: BASE_URL
+        sync: false
+      - key: NEXT_PUBLIC_BASE_URL
+        sync: false
