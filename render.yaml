@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: 9router
+    name: bzarouter
     runtime: docker
     plan: starter
     region: singapore
